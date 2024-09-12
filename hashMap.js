@@ -160,6 +160,8 @@ class HashMap {
     }
     clear() {
         //  removes all entries in the hash map.
+
+        this.data = new Array(this.length());
     }
     keys() {
         // returns an array containing all the keys inside the hash map.

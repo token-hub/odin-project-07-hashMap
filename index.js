@@ -5,3 +5,4 @@ newHashMap.set("john", "suyang");
 newHashMap.set("jonny", "suyang");
 newHashMap.set("jonny3", "suyang");
 newHashMap.remove("jonny3", "suyang");
+newHashMap.clear();
