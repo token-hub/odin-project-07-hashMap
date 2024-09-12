@@ -142,6 +142,7 @@ class LinkedList {
 
         if (index == this.size) {
             nodeBeforeTarget.next = null;
+            this.tail = nodeBeforeTarget;
         } else {
             const nodeAfterTarget = targetNode.next;
             nodeBeforeTarget.next = nodeAfterTarget;
