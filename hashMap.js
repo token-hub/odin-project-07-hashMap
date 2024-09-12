@@ -94,13 +94,10 @@ class HashMap {
         //  takes one argument as a key and returns the value that is assigned to this key. If a key is not found, return null.
     }
     has(key) {
-        // takes a key as an argument and returns true or false based on whether or not the key is in the hash map.
         const hashcode = this._hash(key);
         return !!this.data[hashcode];
     }
     remove(key) {
-        // takes a key as an argument. If the given key is in the hash map, it should remove the entry with that key and return true. If the key isn’t in the hash map, it should return false.
-
         if (!this.has(key)) return false;
 
         const hashCode = this._hash(key);
@@ -120,17 +117,6 @@ class HashMap {
         }
 
         this.size--;
-        /**
-         * hashcode = this._hash(key)
-         * bucket = this.array[hashcode]
-         *
-         * if bucket
-         *      counter = 1;
-         *      loop through the list starting from the head
-         *          if key == node.data.key
-         *          bucket.removeAt(counter)
-         *      counter++
-         */
     }
     length() {
         return this.capacity;
