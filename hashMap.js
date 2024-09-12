@@ -15,7 +15,7 @@ class HashMap {
             hashCode = primeNumber * hashCode + key.charCodeAt(i);
         }
 
-        return hashCode;
+        return hashCode % this.length();
     }
     _resize() {
         // grow the array by multiplying the size by 2
@@ -27,10 +27,10 @@ class HashMap {
     }
     set(key, value) {
         /**
-         * hashcode = this.hash(key) % this.length()
+         * hashcode = this.hash(key)
          */
         const hashcode = 11;
-        // const hashcode = this._hash(key) % this.length();
+        // const hashcode = this._hash(key);
         const bucket = this.data[hashcode];
 
         if (bucket) {
@@ -87,9 +87,7 @@ class HashMap {
         this._isNeedToResize();
     }
     get(key) {
-
-
-        const hashcode = this._hash(key) % this.length();
+        const hashcode = this._hash(key);
         const bucket = this.data[hashcode];
 
         if (bucket) {
@@ -101,7 +99,6 @@ class HashMap {
                 }
                 temp = temp.next;
             }
-
         }
 
         return null;
@@ -109,19 +106,21 @@ class HashMap {
          * hashcode = this._hash(key) % this.length()
          * bucket = this.data[hashcode]
          * if (bucket)
-         * 
+         *
          *      loop through the linkedList to find the target node
          *          if (node.data.key == key)
          *              return node.data.value
-         *      
-         *  return null    
+         *
+         *  return null
          */
-
 
         //  takes one argument as a key and returns the value that is assigned to this key. If a key is not found, return null.
     }
     has(key) {
         // takes a key as an argument and returns true or false based on whether or not the key is in the hash map.
+
+        const hashcode = this._hash(key);
+        return !!this.data[hashcode];
     }
     remove(key) {
         // takes a key as an argument. If the given key is in the hash map, it should remove the entry with that key and return true. If the key isn’t in the hash map, it should return false.
