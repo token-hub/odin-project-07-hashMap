@@ -185,6 +185,24 @@ class HashMap {
     }
     values() {
         // returns an array containing all the values.
+
+        const filledIndexes = this.data.reduce((acc, value, index) => {
+            if (value !== undefined) acc.push(index);
+            return acc;
+        }, []);
+
+        const values = [];
+        filledIndexes.forEach((index) => {
+            const bucket = this.data[index];
+            let temp = bucket.head;
+
+            while (temp) {
+                values.push(temp.data.value);
+                temp = temp.next;
+            }
+        });
+
+        return values;
     }
     entries() {
         // returns an array that contains each key, value pair. Example: [[firstKey, firstValue], [secondKey, secondValue]]

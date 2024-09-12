@@ -4,4 +4,4 @@ const newHashMap = new HashMap();
 newHashMap.set("john", "suyang");
 newHashMap.set("jonny", "suyang");
 newHashMap.set("jonny3", "suyang");
-console.log(newHashMap.keys());
+console.log(newHashMap.values());
