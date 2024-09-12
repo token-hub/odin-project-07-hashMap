@@ -1,9 +1,11 @@
 const LinkedList = require("./linkedList");
 
 class HashMap {
+    #defaultCapacity = 8;
+
     constructor(capacity = 16, loadFactor = 0.75) {
         this.loadFactor = loadFactor;
-        this.data = new Array(capacity);
+        this.data = new Array(capacity || this.#defaultCapacity);
         this.capacity = this.data.length;
         this.size = 0;
     }
@@ -19,24 +21,15 @@ class HashMap {
         return hashCode % this.length();
     }
     _resize() {
-        // grow the array by multiplying the size by 2
-
         const newArray = new Array(this.length() * 2);
         this.data.forEach((value, index) => {
             newArray[index] = value;
         });
-
         this.data = newArray;
         this.capacity = this.data.length;
-        /**
-         * newArray = new Array(this.length() * 2)
-         *
-         * loop through the new array and use the index to get the value from the old array
-         *
-         */
     }
     _isNeedToResize() {
-        if (this.size >= this.length() * this.loadFactor) {
+        if (this.size > this.length() * this.loadFactor) {
             this._resize();
         }
     }
@@ -47,23 +40,10 @@ class HashMap {
         }, []);
     }
     set(key, value) {
-        /**
-         * hashcode = this.hash(key)
-         */
         const hashcode = this._hash(key);
         const bucket = this.data[hashcode];
 
         if (bucket) {
-            /**
-             * temp = bucket.head
-             *
-             * while (temp) // this is for when the bucket is already exist and you want to update the value of the key :>
-             *      if (key == temp.data.key)
-             *          temp.data.value = value
-             *          return
-             *      temp = temp.next
-             * */
-
             let temp = bucket.head;
             while (temp) {
                 if (key == temp.data.key) {
@@ -81,32 +61,6 @@ class HashMap {
             this.data[hashcode] = newLinkedList;
             this.size++;
         }
-
-        /**
-         * bucket = this.data[hashcode]
-         *
-         *
-         * if bucket
-         *      loop through the linkedList starting from the head...
-         *          if key == currentNode.data.key
-         *              currentNode.data.value = value
-         *              return to exit the the function
-         *
-         *      append the new data at the end of the list
-         *      return to exit the function
-         * else
-         *      const newList = new linkedList();
-         *      newList.append({key, value})
-         *      this.data[hashcode] = newList;
-         *
-         * this.entries++
-         */
-        /**
-         * check the entries
-         * if  this.length() > this.capacity * this.loadFactor
-         *      _resize()
-         */
-
         this._isNeedToResize();
     }
     get(key) {
@@ -179,16 +133,14 @@ class HashMap {
          */
     }
     length() {
-        // returns the number of stored keys in the hash map.
         return this.capacity;
     }
     clear() {
-        //  removes all entries in the hash map.
-
-        this.data = new Array(this.length());
+        this.data = new Array(this.#defaultCapacity);
+        this.size = 0;
+        this.capacity = this.#defaultCapacity;
     }
     keys() {
-        // returns an array containing all the keys inside the hash map.
         const keys = [];
         this._filledKeys().forEach((index) => {
             const bucket = this.data[index];
@@ -203,8 +155,6 @@ class HashMap {
         return keys;
     }
     values() {
-        // returns an array containing all the values.
-
         const values = [];
         this._filledKeys().forEach((index) => {
             const bucket = this.data[index];
@@ -219,8 +169,6 @@ class HashMap {
         return values;
     }
     entries() {
-        // returns an array that contains each key, value pair. Example: [[firstKey, firstValue], [secondKey, secondValue]]
-
         const entries = [];
         this._filledKeys().forEach((index) => {
             const bucket = this.data[index];
