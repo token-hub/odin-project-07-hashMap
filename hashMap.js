@@ -165,6 +165,23 @@ class HashMap {
     }
     keys() {
         // returns an array containing all the keys inside the hash map.
+        const filledIndexes = this.data.reduce((acc, value, index) => {
+            if (value !== undefined) acc.push(index);
+            return acc;
+        }, []);
+
+        const keys = [];
+        filledIndexes.forEach((index) => {
+            const bucket = this.data[index];
+            let temp = bucket.head;
+
+            while (temp) {
+                keys.push(temp.data.key);
+                temp = temp.next;
+            }
+        });
+
+        return keys;
     }
     values() {
         // returns an array containing all the values.
