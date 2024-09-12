@@ -14,7 +14,7 @@ class HashMap {
         for (let i = 0; i < key.length; i++) {
             hashCode = primeNumber * hashCode + key.charCodeAt(i);
         }
-
+        return 11;
         return hashCode % this.length();
     }
     _resize() {
@@ -118,12 +118,41 @@ class HashMap {
     }
     has(key) {
         // takes a key as an argument and returns true or false based on whether or not the key is in the hash map.
-
         const hashcode = this._hash(key);
         return !!this.data[hashcode];
     }
     remove(key) {
         // takes a key as an argument. If the given key is in the hash map, it should remove the entry with that key and return true. If the key isn’t in the hash map, it should return false.
+
+        if (!this.has(key)) return false;
+
+        const hashCode = this._hash(key);
+        const bucket = this.data[hashCode];
+
+        let counter = 1;
+        let temp = bucket.head;
+
+        while (temp) {
+            if (key == temp.data.key) {
+                bucket.removeAt(counter);
+                return;
+            }
+
+            temp = temp.next;
+            counter++;
+        }
+
+        /**
+         * hashcode = this._hash(key)
+         * bucket = this.array[hashcode]
+         *
+         * if bucket
+         *      counter = 1;
+         *      loop through the list starting from the head
+         *          if key == node.data.key
+         *          bucket.removeAt(counter)
+         *      counter++
+         */
     }
     length() {
         // returns the number of stored keys in the hash map.
