@@ -5,6 +5,7 @@ class HashMap {
         this.loadFactor = loadFactor;
         this.data = new Array(capacity);
         this.capacity = this.data.length;
+        this.size = 0;
     }
 
     _hash(key) {
@@ -14,14 +15,28 @@ class HashMap {
         for (let i = 0; i < key.length; i++) {
             hashCode = primeNumber * hashCode + key.charCodeAt(i);
         }
-        return 11;
+
         return hashCode % this.length();
     }
     _resize() {
         // grow the array by multiplying the size by 2
+
+        const newArray = new Array(this.length() * 2);
+        this.data.forEach((value, index) => {
+            newArray[index] = value;
+        });
+
+        this.data = newArray;
+        this.capacity = this.data.length;
+        /**
+         * newArray = new Array(this.length() * 2)
+         *
+         * loop through the new array and use the index to get the value from the old array
+         *
+         */
     }
     _isNeedToResize() {
-        if (this.length() > this.length() * this.loadFactor) {
+        if (this.size >= this.length() * this.loadFactor) {
             this._resize();
         }
     }
@@ -35,8 +50,7 @@ class HashMap {
         /**
          * hashcode = this.hash(key)
          */
-        const hashcode = 11;
-        // const hashcode = this._hash(key);
+        const hashcode = this._hash(key);
         const bucket = this.data[hashcode];
 
         if (bucket) {
@@ -60,10 +74,12 @@ class HashMap {
             }
 
             bucket.append({ key, value });
+            this.size++;
         } else {
             const newLinkedList = new LinkedList();
             newLinkedList.append({ key, value });
             this.data[hashcode] = newLinkedList;
+            this.size++;
         }
 
         /**
@@ -90,6 +106,7 @@ class HashMap {
          * if  this.length() > this.capacity * this.loadFactor
          *      _resize()
          */
+
         this._isNeedToResize();
     }
     get(key) {
@@ -148,6 +165,7 @@ class HashMap {
             counter++;
         }
 
+        this.size--;
         /**
          * hashcode = this._hash(key)
          * bucket = this.array[hashcode]
