@@ -87,9 +87,36 @@ class HashMap {
         this._isNeedToResize();
     }
     get(key) {
-        if (index < 0 || index >= this.length()) {
-            throw new Error("Trying to access index out of bound");
+
+
+        const hashcode = this._hash(key) % this.length();
+        const bucket = this.data[hashcode];
+
+        if (bucket) {
+            let temp = bucket.head;
+
+            while (temp) {
+                if (temp.data.key == key) {
+                    return temp.data.value;
+                }
+                temp = temp.next;
+            }
+
         }
+
+        return null;
+        /**
+         * hashcode = this._hash(key) % this.length()
+         * bucket = this.data[hashcode]
+         * if (bucket)
+         * 
+         *      loop through the linkedList to find the target node
+         *          if (node.data.key == key)
+         *              return node.data.value
+         *      
+         *  return null    
+         */
+
 
         //  takes one argument as a key and returns the value that is assigned to this key. If a key is not found, return null.
     }
