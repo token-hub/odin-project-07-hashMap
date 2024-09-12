@@ -25,6 +25,12 @@ class HashMap {
             this._resize();
         }
     }
+    _filledKeys() {
+        return this.data.reduce((acc, value, index) => {
+            if (value !== undefined) acc.push(index);
+            return acc;
+        }, []);
+    }
     set(key, value) {
         /**
          * hashcode = this.hash(key)
@@ -165,13 +171,8 @@ class HashMap {
     }
     keys() {
         // returns an array containing all the keys inside the hash map.
-        const filledIndexes = this.data.reduce((acc, value, index) => {
-            if (value !== undefined) acc.push(index);
-            return acc;
-        }, []);
-
         const keys = [];
-        filledIndexes.forEach((index) => {
+        this._filledKeys().forEach((index) => {
             const bucket = this.data[index];
             let temp = bucket.head;
 
@@ -186,13 +187,8 @@ class HashMap {
     values() {
         // returns an array containing all the values.
 
-        const filledIndexes = this.data.reduce((acc, value, index) => {
-            if (value !== undefined) acc.push(index);
-            return acc;
-        }, []);
-
         const values = [];
-        filledIndexes.forEach((index) => {
+        this._filledKeys().forEach((index) => {
             const bucket = this.data[index];
             let temp = bucket.head;
 
@@ -206,6 +202,19 @@ class HashMap {
     }
     entries() {
         // returns an array that contains each key, value pair. Example: [[firstKey, firstValue], [secondKey, secondValue]]
+
+        const entries = [];
+        this._filledKeys().forEach((index) => {
+            const bucket = this.data[index];
+            let temp = bucket.head;
+
+            while (temp) {
+                entries.push([temp.data.key, temp.data.value]);
+                temp = temp.next;
+            }
+        });
+
+        return entries;
     }
 }
 
