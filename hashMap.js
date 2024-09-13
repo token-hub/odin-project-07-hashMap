@@ -77,21 +77,7 @@ class HashMap {
                 temp = temp.next;
             }
         }
-
         return null;
-        /**
-         * hashcode = this._hash(key) % this.length()
-         * bucket = this.data[hashcode]
-         * if (bucket)
-         *
-         *      loop through the linkedList to find the target node
-         *          if (node.data.key == key)
-         *              return node.data.value
-         *
-         *  return null
-         */
-
-        //  takes one argument as a key and returns the value that is assigned to this key. If a key is not found, return null.
     }
     has(key) {
         const hashcode = this._hash(key);
